@@ -6,7 +6,7 @@
  * no markdown fences, no | characters, no > prefixes, no ** bold.
  *
  * Usage:
- *   /grab           — open selector with all copyable blocks
+ *   /smart-copy     — open selector with all copyable blocks
  *   Ctrl+Shift+Y    — shortcut
  *
  * The selector shows a preview of each block. Pick one and it's
@@ -346,7 +346,7 @@ export default function (pi: ExtensionAPI) {
     }
   }
 
-  pi.registerCommand("grab", {
+  pi.registerCommand("smart-copy", {
     description:
       "Copy clean content from conversation (code, prompts, tables — without formatting)",
     handler: async (_args, ctx) => {

@@ -40,7 +40,7 @@ Or add to your `settings.json`:
 
 | Trigger | Action |
 |---------|--------|
-| `/grab` | Opens selector overlay with all copyable blocks |
+| `/smart-copy` | Opens selector overlay with all copyable blocks |
 | `Ctrl+Shift+Y` | Shortcut |
 
 The selector shows a preview of each block, most recent first. Type to filter. Press Enter to copy the selected block to your system clipboard.
@@ -54,7 +54,7 @@ The assistant outputs:
 > Create a markdown summary and run the linter.**
 ```
 
-You run `/grab` (or press `Ctrl+Shift+Y`), select "Prompt / Quote", and your clipboard gets:
+You run `/smart-copy` (or press `Ctrl+Shift+Y`), select "Prompt / Quote", and your clipboard gets:
 
 ```
 Read the file src/load.tsx and identify all try/catch blocks.
