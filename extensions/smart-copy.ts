@@ -248,7 +248,7 @@ export default function (pi: ExtensionAPI) {
     const reversed = [...blocks].reverse();
 
     const items: SelectItem[] = reversed.map((b, i) => ({
-      value: `${b.label} ${b.preview} ${b.turnLabel}::${i}`,
+      value: `${b.preview} ${b.label} ${b.turnLabel}::${i}`,
       label: `${b.label}  ${b.turnLabel}`,
       description: b.preview,
     }));
