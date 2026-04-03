@@ -1,0 +1,19 @@
+{
+  "name": "pi-smart-copy",
+  "version": "1.0.0",
+  "description": "Copy clean content from Pi conversations — code blocks, prompts, and tables without markdown formatting artifacts",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "author": "Mahmoud El Sayad",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahmoudelsayad/pi-smart-copy"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*"
+  },
+  "pi": {
+    "extensions": ["./extensions"]
+  }
+}
