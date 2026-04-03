@@ -6,8 +6,8 @@
  * no markdown fences, no | characters, no > prefixes, no ** bold.
  *
  * Usage:
- *   /copy           — open selector with all copyable blocks
- *   Ctrl+Shift+Y    — same (Y for "yank")
+ *   /grab           — open selector with all copyable blocks
+ *   Ctrl+Shift+Y    — shortcut
  *
  * The selector shows a preview of each block. Pick one and it's
  * copied to the system clipboard, cleaned of formatting artifacts.
@@ -346,7 +346,7 @@ export default function (pi: ExtensionAPI) {
     }
   }
 
-  pi.registerCommand("yank", {
+  pi.registerCommand("grab", {
     description:
       "Copy clean content from conversation (code, prompts, tables — without formatting)",
     handler: async (_args, ctx) => {
