@@ -248,7 +248,7 @@ export default function (pi: ExtensionAPI) {
     const reversed = [...blocks].reverse();
 
     const items: SelectItem[] = reversed.map((b, i) => ({
-      value: String(i),
+      value: `${b.label} ${b.preview} ${b.turnLabel}::${i}`,
       label: `${b.label}  ${b.turnLabel}`,
       description: b.preview,
     }));
@@ -344,7 +344,8 @@ export default function (pi: ExtensionAPI) {
 
     if (result === null) return;
 
-    const selected = reversed[Number(result)];
+    const idx = parseInt(result.split("::").pop() ?? "0", 10);
+    const selected = reversed[idx];
     if (!selected) return;
 
     const ok = await copyToClipboard(selected.clean);
