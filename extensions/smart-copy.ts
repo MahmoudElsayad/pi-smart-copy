@@ -21,6 +21,7 @@ import { DynamicBorder } from "@mariozechner/pi-coding-agent";
 import {
   Container,
   Key,
+  matchesKey,
   type SelectItem,
   SelectList,
   Text,
@@ -290,6 +291,8 @@ export default function (pi: ExtensionAPI) {
         selectList.onCancel = () => done(null);
         container.addChild(selectList);
 
+        let filterText = "";
+
         container.addChild(
           new Text(
             theme.fg(
@@ -310,6 +313,19 @@ export default function (pi: ExtensionAPI) {
           render: (w: number) => container.render(w),
           invalidate: () => container.invalidate(),
           handleInput: (data: string) => {
+            if (matchesKey(data, "backspace")) {
+              filterText = filterText.slice(0, -1);
+              selectList.setFilter(filterText);
+              tui.requestRender();
+              return;
+            }
+            // Printable character → add to filter
+            if (data.length === 1 && data.charCodeAt(0) >= 32) {
+              filterText += data;
+              selectList.setFilter(filterText);
+              tui.requestRender();
+              return;
+            }
             selectList.handleInput(data);
             tui.requestRender();
           },
