@@ -7,7 +7,7 @@
  *
  * Usage:
  *   /smart-copy     — open selector with all copyable blocks
- *   Ctrl+Shift+Y    — shortcut
+ *   Ctrl+Shift+C    — shortcut
  *
  * The selector shows a preview of each block. Pick one and it's
  * copied to the system clipboard, cleaned of formatting artifacts.
@@ -381,7 +381,7 @@ export default function (pi: ExtensionAPI) {
     },
   });
 
-  pi.registerShortcut(Key.ctrlShift("y"), {
+  pi.registerShortcut(Key.ctrlShift("c"), {
     description: "Smart copy — pick and copy clean content",
     handler: async (ctx) => {
       await showCopySelector(ctx as any);

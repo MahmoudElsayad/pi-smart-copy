@@ -21,7 +21,7 @@ Your agent suggests a follow-up prompt:
 
 > **Read `src/auth.ts` and identify all the security vulnerabilities. Create a `SECURITY-AUDIT.md` with your findings.**
 
-With Smart Copy, press `Ctrl+Shift+Y`, select it, and paste it clean into a new session — no `>` or `**` in the way.
+With Smart Copy, press `Ctrl+Shift+C`, select it, and paste it clean into a new session — no `>` or `**` in the way.
 
 ### Copy code into files
 
@@ -75,7 +75,7 @@ Or add to your `settings.json`:
 | Trigger | Action |
 |---------|--------|
 | `/smart-copy` | Opens selector overlay with all copyable blocks |
-| `Ctrl+Shift+Y` | Shortcut |
+| `Ctrl+Shift+C` | Shortcut |
 
 The selector scans all assistant messages in the current session and shows copyable blocks, most recent first.
 
