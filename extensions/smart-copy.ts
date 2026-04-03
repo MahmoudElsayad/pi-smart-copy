@@ -292,22 +292,30 @@ export default function (pi: ExtensionAPI) {
         container.addChild(selectList);
 
         let filterText = "";
-
-        container.addChild(
-          new Text(
-            theme.fg(
-              "dim",
-              " ↑↓ navigate • enter copy • esc cancel • type to filter"
-            ),
-            1,
-            0
-          )
+        const searchLine = new Text("", 1, 0);
+        const hintsLine = new Text(
+          theme.fg("dim", " ↑↓ navigate • enter copy • esc cancel • type to search"),
+          1, 0
         );
+        container.addChild(searchLine);
+        container.addChild(hintsLine);
         container.addChild(
           new DynamicBorder((s: string) =>
             theme.fg("accent", s)
           )
         );
+
+        function updateSearchLine() {
+          if (filterText.length > 0) {
+            searchLine.setText(
+              theme.fg("accent", " ⌕ ") +
+              theme.fg("text", filterText) +
+              theme.fg("dim", "▎")
+            );
+          } else {
+            searchLine.setText("");
+          }
+        }
 
         return {
           render: (w: number) => container.render(w),
@@ -316,6 +324,7 @@ export default function (pi: ExtensionAPI) {
             if (matchesKey(data, "backspace")) {
               filterText = filterText.slice(0, -1);
               selectList.setFilter(filterText);
+              updateSearchLine();
               tui.requestRender();
               return;
             }
@@ -323,6 +332,7 @@ export default function (pi: ExtensionAPI) {
             if (data.length === 1 && data.charCodeAt(0) >= 32) {
               filterText += data;
               selectList.setFilter(filterText);
+              updateSearchLine();
               tui.requestRender();
               return;
             }
