@@ -1,68 +1,54 @@
 # pi-smart-copy
 
-A [Pi](https://github.com/badlogic/pi-mono) extension that lets you copy clean content from conversations — code blocks, prompts, and tables — without markdown formatting artifacts.
+`pi-smart-copy` is a Pi extension for copying **clean, paste-ready content** from assistant messages.
 
-## Why?
+It detects common markdown structures in a conversation—such as code blocks, quoted prompts, and tables—and copies a normalized version to your clipboard without the formatting noise that usually comes with terminal selection.
 
-When working with AI coding agents, you constantly need to **reuse output** — paste a generated prompt into a new session, copy a code snippet into a file, or grab a table for documentation. But selecting text from a terminal conversation gives you raw markdown:
+## Why it is useful
 
-- `>` blockquote prefixes you have to strip
-- `**bold**` and `` `code` `` markers mixed into text
-- `|` table delimiters and `|---|---|` separator rows
-- ```` ``` ```` fence markers wrapping code
+When you copy content directly from an agent conversation, you often get extra markdown syntax that you do not actually want to paste anywhere else:
 
-You end up manually cleaning every paste. **Smart Copy** eliminates this entirely.
+- blockquote prefixes like `>`
+- emphasis markers like `**bold**`
+- inline code backticks
+- fenced code block markers
+- markdown table pipes and separator rows
 
-## Use Cases
+That makes common workflows slower than they should be. `pi-smart-copy` removes that cleanup step so you can move content directly into:
 
-### Reuse prompts across sessions
+- a new Pi session
+- your editor or IDE
+- documentation tools such as Notion or Confluence
+- spreadsheets such as Google Sheets or Excel
+- chat messages, tickets, or pull requests
 
-Your agent suggests a follow-up prompt:
+## Features
 
-> **Read `src/auth.ts` and identify all the security vulnerabilities. Create a `SECURITY-AUDIT.md` with your findings.**
+- `/smart-copy` command
+- `Ctrl+Shift+C` keyboard shortcut
+- Interactive picker overlay
+- Live filtering while you type
+- Most-recent-first results
+- Cross-platform clipboard support
+- Clean handling for code blocks, prompts/quotes, and markdown tables
 
-With Smart Copy, press `Ctrl+Shift+C`, select it, and paste it clean into a new session — no `>` or `**` in the way.
+## Supported content
 
-### Copy code into files
-
-The agent generates a utility function inside a code block. Instead of selecting around the fences and hoping you got it right, Smart Copy extracts just the code — ready to paste into your editor.
-
-### Grab tables for docs or spreadsheets
-
-The agent produces a comparison table:
-
-```
-| Approach | Pros | Cons |
-|----------|------|------|
-| Option A | Fast | Fragile |
-| Option B | Safe | Slow |
-```
-
-Smart Copy gives you tab-separated clean text — paste directly into Google Sheets, Notion, or a wiki without cleanup.
-
-### Share agent output with teammates
-
-When you need to share a specific finding, recommendation, or analysis from a long conversation, Smart Copy lets you pull just that block without the surrounding conversation noise.
-
-### Build prompt libraries
-
-If you develop reusable prompts for your workflow, Smart Copy makes it easy to collect prompts the agent suggests and save them — already cleaned and ready to store.
-
-## What Gets Cleaned
-
-| Block Type | Detected By | Cleaning |
-|---|---|---|
-| Code blocks | ` ``` ` fences | Fence markers and language tags removed |
-| Prompts / Quotes | `> ` prefixed lines | `>` prefix, `**bold**`, `` `code` `` markers stripped |
-| Tables | `\|` delimited rows | `\|` chars removed, separator rows dropped, cells tab-separated |
+| Content type | Detected from | Copied output |
+| --- | --- | --- |
+| Code blocks | Triple-backtick fenced blocks | Raw code without fences or language labels |
+| Prompts / quotes | Markdown blockquotes | Plain text without `>`, `**`, or inline backticks |
+| Tables | Markdown table rows | Tab-separated cells without pipes or separator rows |
 
 ## Install
+
+### Quick install
 
 ```bash
 pi install git:github.com/MahmoudElsayad/pi-smart-copy
 ```
 
-Or add to your `settings.json`:
+### Via `settings.json`
 
 ```json
 {
@@ -70,44 +56,82 @@ Or add to your `settings.json`:
 }
 ```
 
+After installation, run:
+
+```bash
+/reload
+```
+
 ## Usage
 
-| Trigger | Action |
-|---------|--------|
-| `/smart-copy` | Opens selector overlay with all copyable blocks |
-| `Ctrl+Shift+C` | Shortcut |
+### Command
 
-The selector scans all assistant messages in the current session and shows copyable blocks, most recent first.
-
-- **↑↓** to navigate
-- **Type** to search content (live filter with search bar)
-- **Enter** to copy the selected block to clipboard
-- **Esc** to cancel
-
-### Example
-
-The assistant outputs:
-
-```
-> **Read the file `src/load.tsx` and identify all try/catch blocks.
-> Create a markdown summary and run the linter.**
+```text
+/smart-copy
 ```
 
-You run `/smart-copy`, select "Prompt / Quote", and your clipboard gets:
+### Shortcut
 
+```text
+Ctrl+Shift+C
 ```
+
+### Workflow
+
+1. Open the Smart Copy picker.
+2. Type to filter by content.
+3. Use `↑` and `↓` to move through matches.
+4. Press `Enter` to copy the selected block.
+5. Press `Esc` to close the picker.
+
+## Common use cases
+
+### Reuse prompts across sessions
+Copy a prompt suggested by the assistant and paste it directly into a new Pi session without blockquote markers or inline markdown.
+
+### Paste generated code into a file
+Copy only the code from a fenced block and paste it straight into your editor.
+
+### Move tables into docs or spreadsheets
+Copy a markdown table as tab-separated text that pastes cleanly into Google Sheets, Excel, Notion, or internal docs.
+
+### Share a specific result with teammates
+Extract a concise analysis block, recommendation, or example from a longer conversation without dragging along surrounding chat history.
+
+### Build a prompt library
+Collect useful prompts from sessions and store them in your own prompt library in a clean format.
+
+## Example
+
+### Assistant output
+
+```md
+> **Read the file `src/load.tsx` and identify all try/catch blocks.**
+> **Create a markdown summary and run the linter.**
+```
+
+### Copied result
+
+```text
 Read the file src/load.tsx and identify all try/catch blocks.
 Create a markdown summary and run the linter.
 ```
 
-No `>`, no `**`, no `` ` `` — just clean text ready to paste.
+## Platform support
 
-## Supported Platforms
+Clipboard integration uses the following tools:
 
-Clipboard integration uses:
-- **macOS**: `pbcopy`
-- **Linux**: `xclip`
-- **Windows**: `clip.exe`
+- **macOS:** `pbcopy`
+- **Linux:** `xclip`
+- **Windows:** `clip.exe`
+
+> On Linux, make sure `xclip` is installed and available in `PATH`.
+
+## Notes
+
+- Smart Copy scans assistant messages in the current session.
+- Filtering is content-oriented, so typing part of the text you want is the fastest way to find it.
+- The extension is designed to keep copied output practical rather than perfectly markdown-faithful.
 
 ## License
 
