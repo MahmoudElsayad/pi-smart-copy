@@ -4,6 +4,8 @@
 
 It detects common markdown structures in a conversation—such as code blocks, quoted prompts, and tables—and copies a normalized version to your clipboard without the formatting noise that usually comes with terminal selection.
 
+![pi-smart-copy demo](./media/demo.gif)
+
 ## Why it is useful
 
 When you copy content directly from an agent conversation, you often get extra markdown syntax that you do not actually want to paste anywhere else:

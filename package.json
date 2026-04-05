@@ -22,6 +22,7 @@
   },
   "files": [
     "extensions",
+    "media",
     "README.md",
     "LICENSE"
   ],
@@ -32,6 +33,7 @@
   "pi": {
     "extensions": [
       "./extensions"
-    ]
+    ],
+    "image": "https://raw.githubusercontent.com/MahmoudElsayad/pi-smart-copy/main/media/demo.gif"
   }
 }
